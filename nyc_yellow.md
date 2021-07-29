@@ -20,6 +20,7 @@ SELECT distinct(substr(string(dropoff_datetime), 1,4))
 FROM `bigquery-public-data.new_york_taxi_trips.tlc_yellow_trips_2016`
 ```
 ANS:![image](https://user-images.githubusercontent.com/87647766/127478765-76359d0b-e77b-4bb1-ac15-5dfe08b2a287.png)
+
 We have to consider the years only 2016 and 2017. Also there are erroneous vendor, hence only vendors 1 and 2 must be considered. 
 
 * Business Questions
@@ -39,6 +40,7 @@ group by vendor_id
 order by total_distance desc
 ```
 ANS: ![image](https://user-images.githubusercontent.com/87647766/127479924-a39f4853-28d1-403d-9ee4-762e4ae225dc.png)
+
 We can see that vendor 1 i.e. Creative Mobile Technologies(1) covered a higher distance by almost double.
 
 ### Which vendor has a higher collection of total amount: Creative Mobile Technologies(1) or VeriFone Inc(2) ?
@@ -51,6 +53,7 @@ group by vendor_id
 order by total_amt desc
 ```
 ANS:![image](https://user-images.githubusercontent.com/87647766/127480341-063a5589-5f13-4b50-a67f-74ea6202e75a.png)
+
 Surprisingly vendor 2 has a higher amount collection compared to that of vendor 1.
 
 ###  Check how the payment types vary for both the vendors: do customers associated with Vendor 1 prefer Card Payments over cash ?
@@ -65,6 +68,7 @@ group by payment_type
 order by payment_type
 ```
 ANS: ![image](https://user-images.githubusercontent.com/87647766/127481257-eb67baa8-6035-45b8-8458-14a5dc17bf4b.png)
+
 We can see that majority of the customers pay by credit card
 
 For Vendor 1:
@@ -111,6 +115,7 @@ from ta left join tm on ta.vendor_id=tm.vendor_id
 order by vendor_id
 ```
 ANS: ![image](https://user-images.githubusercontent.com/87647766/127484387-01c75486-51a8-4d82-b0ec-f622b74700d7.png)
+
 We can see that vendor 1 is economical in terms of rate per mile than vendor 2 which has almost double rate per mile when companred to vendor 1. This might be one of the reasons why vendor 2 has a higher amount collection despite the lower distance covered.
 
 ### Average rate of the holiday season(trip start: 24th dec-31st dec) as compared to that of the normal days
