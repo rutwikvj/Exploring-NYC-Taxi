@@ -26,6 +26,7 @@ We have to consider the years only 2016 and 2017. Also there are erroneous vendo
 # Business Questions
   *  Which vendor covered a higher distance of trips: Creative Mobile Technologies(1) or VeriFone Inc(2) ?
   *  Which vendor has a higher collection of total amount: Creative Mobile Technologies(1) or VeriFone Inc(2) ?
+  *  Does the average amount increase as the number of passengers increase ?
   *  Check how the payment types vary for both the vendors: do customers associated with Vendor 1 prefer Card Payments over cash ?
   *  Check how the rate codes at the end of the trip vary for both the vendors
   *  Average rate per kilometer for both the vendors(Amount includes fare, tax and tips)
@@ -56,6 +57,19 @@ order by total_amt desc
 ANS: ![image](https://user-images.githubusercontent.com/87647766/127480341-063a5589-5f13-4b50-a67f-74ea6202e75a.png)
 
 Surprisingly vendor 2 has a higher amount collection compared to that of vendor 1.
+
+### Does the average amount increase as the number of passengers increase ?
+```sql
+SELECT avg(total_amount) as avg_total_amt,passenger_count
+FROM `bigquery-public-data.new_york_taxi_trips.tlc_yellow_trips_2016`
+where vendor_id IN ('1','2') and
+substr(string(dropoff_datetime), 1,4) in ('2016','2017')
+group by passenger_count
+order by passenger_count
+```
+ANS:  ![image](https://user-images.githubusercontent.com/87647766/127513828-fe7e1ce3-02d5-4483-afdf-dd2122e52edd.png)
+
+We can see that average total amount is almost the same for passeneger count from 1 to 6. After which the average total amount exponentially rises for passenger counts 7,8 and 9. We can also notice that there is an average amount for passenger count 0 as indicated by the driver, this can most likely be for cancelled trips where a cancellation amount is charged to the customer.
 
 ###  Check how the payment types vary for both the vendors: do customers associated with Vendor 1 prefer Card Payments over cash ?
 Note:  1= Credit card 2= Cash 3= No charge 4= Dispute 5= Unknown 6= Voided trip
