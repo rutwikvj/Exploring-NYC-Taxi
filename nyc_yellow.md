@@ -21,7 +21,7 @@ FROM `bigquery-public-data.new_york_taxi_trips.tlc_yellow_trips_2016`
 ```
 ANS: ![image](https://user-images.githubusercontent.com/87647766/127478765-76359d0b-e77b-4bb1-ac15-5dfe08b2a287.png)
 
-We have to consider the years only 2016 and 2017. Also there are erroneous vendor, hence only vendors 1 and 2 must be considered. 
+We have to consider the years only 2016 and 2017. Also there are erroneous vendors, hence only vendors 1 and 2 must be considered. 
 
 # Business Questions
   *  Which vendor covered a higher distance of trips: Creative Mobile Technologies(1) or VeriFone Inc(2) ?
