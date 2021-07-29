@@ -23,7 +23,7 @@ ANS: ![image](https://user-images.githubusercontent.com/87647766/127478765-76359
 
 We have to consider the years only 2016 and 2017. Also there are erroneous vendor, hence only vendors 1 and 2 must be considered. 
 
-* Business Questions
+# Business Questions
   *  Which vendor covered a higher distance of trips: Creative Mobile Technologies(1) or VeriFone Inc(2) ?
   *  Which vendor has a higher collection of total amount: Creative Mobile Technologies(1) or VeriFone Inc(2) ?
   *  Check how the payment types vary for both the vendors: do customers associated with Vendor 1 prefer Card Payments over cash ?
