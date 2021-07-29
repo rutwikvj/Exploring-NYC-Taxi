@@ -27,6 +27,7 @@ We have to consider the years only 2016 and 2017. Also there are erroneous vendo
   *  Which vendor covered a higher distance of trips: Creative Mobile Technologies(1) or VeriFone Inc(2) ?
   *  Which vendor has a higher collection of total amount: Creative Mobile Technologies(1) or VeriFone Inc(2) ?
   *  Check how the payment types vary for both the vendors: do customers associated with Vendor 1 prefer Card Payments over cash ?
+  *  Check how the rate codes at the end of the trip vary for both the vendors
   *  Average rate per kilometer for both the vendors(Amount includes fare, tax and tips)
   *  Average rate of the holiday season(trips between: 24th Dec-31st Dec) as compared to that of the normal days
 
@@ -95,6 +96,35 @@ ANS: ![image](https://user-images.githubusercontent.com/87647766/127481907-e566f
 
 We can see that the payment types are almost indifferent to the two vendors. However Vendor 2 has no unknown payment types and a lot lesser disputed payment types than vendor 1.
 
+### Check how the rate codes at the end of the trip vary for both the vendors
+Node: 1= Standard rate 2=JFK 3=Newark 4=Nassau or Westchester 5=Negotiated fare 6=Group ride
+```sql
+with v1 as(
+SELECT count(rate_code) as v1_rate_code_count,rate_code
+FROM `bigquery-public-data.new_york_taxi_trips.tlc_yellow_trips_2016`
+where vendor_id = '1' and
+substr(string(dropoff_datetime), 1,4) in ('2016','2017') and 
+rate_code in (1,2,3,4,5,6)
+group by rate_code
+order by rate_code
+),
+v2 as(
+SELECT count(rate_code) as v2_rate_code_count,rate_code
+FROM `bigquery-public-data.new_york_taxi_trips.tlc_yellow_trips_2016`
+where vendor_id = '2' and
+substr(string(dropoff_datetime), 1,4) in ('2016','2017') and 
+rate_code in (1,2,3,4,5,6)
+group by rate_code
+order by rate_code
+)
+select v1.rate_code, v1_rate_code_count, v2_rate_code_count
+from v1 left join v2 on v1.rate_code=v2.rate_code
+order by rate_code
+```
+ANS: ![image](https://user-images.githubusercontent.com/87647766/127504767-edbfbb65-967a-4e47-bf88-036fb9af3bed.png)
+
+We can see that the rate code of standard rate is the highest for both the vendors, the count of rate codes are almost the same for JFK, Newark, Nassau or Westchester and Negotiated fare rate codes for both the vendors. However when it comes to the count of Group ride rate codes: Vendor 1 has almost 10 times the count of Vendor 2 indicating that Vendor 1 is more preferred for group rides.
+
 ### Average rate per kilometer for both the vendors(Amount includes fare, tax and tips)
 ```sql
 with ta as
@@ -154,5 +184,4 @@ select rate_per_mile, "Regular Season" from regular_season
 ANS:  ![image](https://user-images.githubusercontent.com/87647766/127501158-c6d554e0-22ac-462f-bbf6-128e6d4e7f43.png)
 
 We can clearly see that the rate per mile during the holiday season is higher than the rate per mile regular season.
-
 
